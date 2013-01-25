@@ -1,0 +1,5 @@
+package Airport
+
+class DocumentCheck {
+
+}
