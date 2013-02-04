@@ -1,5 +1,8 @@
 package Airport
+import scala.actors.Actor
 
-class BagCheck {
-
+class BagCheck extends Actor{
+	def act () {
+	  
+	}
 }
