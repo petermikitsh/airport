@@ -4,7 +4,7 @@ import scala.util.Random
 
 case class passenger(name: String)
 
-class DocumentCheck (line: Array[Airport.Line]) extends Actor{
+class DocumentCheck (line: Array[String]) extends Actor{
   
   //20% probability that the passenger will fail
   var failureRate = 20;
@@ -12,6 +12,7 @@ class DocumentCheck (line: Array[Airport.Line]) extends Actor{
   var lineNumber = 0;
   // List for holding all the lines.
   var lines = line; 
+  var airportLine = new Line()
   
   def act() {
     loop{
@@ -64,4 +65,11 @@ class DocumentCheck (line: Array[Airport.Line]) extends Actor{
     println("Document Check: Close sent");
     println("Document Check: Closed");
   }
+}
+
+object Main extends App {
+  val docCheck = new DocumentCheck
+  
+  
+  
 }
