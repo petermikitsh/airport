@@ -1,6 +1,17 @@
+<<<<<<< HEAD
 .cache
 .classpath
 .project
 .settings
 *.class
 TSA\ Airport/bin/
+=======
+
+TSA Airport/.classpath
+
+TSA Airport/.classpath
+
+TSA Airport/.classpath
+
+TSA Airport/.settings/org.eclipse.jdt.core.prefs
+>>>>>>> DocCheckupdates
