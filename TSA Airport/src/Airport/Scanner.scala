@@ -8,7 +8,7 @@ case class check (result: String, name: String)
 /**
  * Takes in percentage of pass/fail rate and number of lines this actor should have
  */
-class BagCheck (percentage: Int, lines: Int) extends Actor{
+class Scanner (percentage: Int, lines: Int) extends Actor{
   var result = ""; 
   var name = "";
   var randNumber = new Random(100); // number between 1 and 100 to determine pass/fail

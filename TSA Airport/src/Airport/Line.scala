@@ -2,7 +2,7 @@ package Airport
 import scala.actors.Actor
 import scala.actors.Actor._
 
-class Line (bodyCheck: Airport.BodyCheck, bagCheck: Airport.BagCheck) extends Actor{
+class Line (bagCheck: Airport.Scanner, bodyCheck: Airport.Scanner) extends Actor{
 
   /*
    *  Map Structure:
