@@ -43,10 +43,18 @@ class Line extends Actor{
 		        map + (name -> result);
 	        }
 	      case name : String =>
-	        bagCheck ! name;
-	        printf("Passenger %s's bags enter the bag check.\n", name);
-	        bodyCheck ! name;
-	        printf("Passenger %s enters the body check.\n", name)
+	        if (name == "stop") {
+	          bagCheck ! "stop"
+	          println("Line: Closing bag check.")
+	          bodyCheck ! "stop"
+	          println("Line: Closing body check.")
+	          exit
+	        } else {
+	          bagCheck ! name
+	          printf("Line: Passenger #%s bags enter the bag check.\n", name)
+	          bodyCheck ! name
+	          printf("Line: Passenger #%s enters the body check.\n", name)
+	        }
 	    }
 	  }
 	}
@@ -55,11 +63,11 @@ class Line extends Actor{
 	  map.get(name) match {
 	  	case Some(k) =>
 	  	  	if (k(1) && k(2)) {
-	  	  	  printf("Passenger %s cleared all scans.\n", name);
+	  	  	  printf("Line: Passenger #%s cleared all scans.\n", name);
 	  	  	} else {
-	  	  	  printf("Passenger %s failed one or more checks and goes to jail.\n", name)
+	  	  	  printf("Line: Passenger #%s failed one or more checks and goes to jail.\n", name)
 	  	  	}
-	  	case None => println("ERROR: Passenger not found! (onArrayComplete)")
+	  	case None => println("ERROR: Passenger not found! (onArrayComplete).")
 	  }
 	}
 	

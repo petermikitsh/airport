@@ -20,6 +20,7 @@ class Scanner (percentage: Int, lines: Int) extends Actor{
 	        openLines = openLines - 1 
 	        // if stop is received exit the loop
 	        if (s == "stop")
+	          println("Scanner: Closing scanner.")
 	          exit
 	          
 	        // Check to see if there is an open line

@@ -35,8 +35,10 @@ class DocumentCheck extends Actor {
           //loop through the actor lines and send close messages.
           for (l <- airportLines){
             l ! "stop"
+            println("Line stopped.")
           }
           logClosing()
+   
           exit
       }
     }
@@ -52,50 +54,23 @@ class DocumentCheck extends Actor {
   }
   
   def passed():Boolean = {
-    var passed = true;
     var randNumber = new Random(100)
-    if(randNumber.nextInt() < failureRate)
-      passed = false
-    
-    return passed;
+    return randNumber.nextInt() < failureRate;
   }
   
   def logArrival (passenger: String){
-    println("Document Check: Passenger name arrives"); // Somehow get passenger's names
+    printf("Document Check: Passenger #%s arrives.\n", passenger);
   }
   
   def logTurnedAway(passenger: String){
-    println("Document Check: Passenger name turned away"); // Get passenger name
+    printf("Document Check: Passenger #%s turned away.\n", passenger);
   }
   
   def logSentToLine(passenger: String){
-    println("Document Check: Passenger name sent to line " + lineNumber);
+    printf("Document Check: Passenger #%s name sent to line %d.\n", passenger, lineNumber);
   }
   
   def logClosing(){
-    println("Document Check: Close sent");
-    println("Document Check: Closed");
+    println("Document Check: Closed.");
   }
-}
-
-object Main extends App {
-  val docCheck = new DocumentCheck
-  docCheck.start
-  docCheck ! passenger("pass1")
-  docCheck ! passenger("pass2")
-  docCheck ! passenger("pass3")
-  docCheck ! passenger("pass4")
-  docCheck ! passenger("pass5")
-  docCheck ! passenger("pass6")
-  docCheck ! passenger("pass7")
-  docCheck ! passenger("pass8")
-  docCheck ! passenger("pass9")
-  docCheck ! passenger("pass10")
-  docCheck ! passenger("pass11")
-  docCheck ! passenger("pass12")
-  
-  
-  
-  
-  
 }
