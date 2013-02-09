@@ -4,14 +4,14 @@ import scala.util.Random
 
 case class passenger(name: String)
 
-class DocumentCheck (line: Array[Airport.Line]) extends Actor{
+class DocumentCheck extends Actor {
   
   //20% probability that the passenger will fail
   var failureRate = 20;
   // Which line to hand the passenger off to next
   var lineNumber = 0;
   // List for holding all the lines.
-  var lines = line; 
+  var lines:Array[Airport.Line] = makeLines(5)
   
   def act() {
     loop{
@@ -37,6 +37,14 @@ class DocumentCheck (line: Array[Airport.Line]) extends Actor{
           exit
       }
     }
+  }
+  
+  def makeLines(numLines : Int):Array[Airport.Line] = {
+    var temp:Array[Airport.Line] = new Array[Airport.Line](numLines);
+    for (i <- 0 to numLines-1) {
+      temp(i) = new Airport.Line;
+    }
+    return temp;
   }
   
   def passed():Boolean = {
