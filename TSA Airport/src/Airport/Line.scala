@@ -2,7 +2,7 @@ package Airport
 import scala.actors.Actor
 import scala.actors.Actor._
 
-class Line extends Actor{
+class Line(id: Int) extends Actor{
 
   /*
    *  Map Structure:
@@ -45,15 +45,16 @@ class Line extends Actor{
 	      case name : String =>
 	        if (name == "stop") {
 	          bagCheck ! "stop"
-	          println("Line: Closing bag check.")
+	          printf("Line %d: Closing bag check.\n", id)
 	          bodyCheck ! "stop"
-	          println("Line: Closing body check.")
+	          printf("Line %d: Closing body check.\n", id)
+	          printf("Line %d: Stopped.\n", id)
 	          exit
 	        } else {
 	          bagCheck ! name
-	          printf("Line: Passenger #%s bags enter the bag check.\n", name)
+	          printf("Line %d: Passenger #%s bags enter the bag check.\n", id, name)
 	          bodyCheck ! name
-	          printf("Line: Passenger #%s enters the body check.\n", name)
+	          printf("Line %d: Passenger #%s enters the body check.\n", id, name)
 	        }
 	    }
 	  }
@@ -63,9 +64,9 @@ class Line extends Actor{
 	  map.get(name) match {
 	  	case Some(k) =>
 	  	  	if (k(1) && k(2)) {
-	  	  	  printf("Line: Passenger #%s cleared all scans.\n", name);
+	  	  	  printf("Line %d: Passenger #%s cleared all scans.\n", id, name);
 	  	  	} else {
-	  	  	  printf("Line: Passenger #%s failed one or more checks and goes to jail.\n", name)
+	  	  	  printf("Line %d: Passenger #%s failed one or more checks and goes to jail.\n", id, name)
 	  	  	}
 	  	case None => println("ERROR: Passenger not found! (onArrayComplete).")
 	  }

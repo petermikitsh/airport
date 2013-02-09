@@ -35,7 +35,6 @@ class DocumentCheck extends Actor {
           //loop through the actor lines and send close messages.
           for (l <- airportLines){
             l ! "stop"
-            println("Line stopped.")
           }
           logClosing()
    
@@ -47,7 +46,7 @@ class DocumentCheck extends Actor {
   def makeLines(numLines : Int):Array[Airport.Line] = {
     var temp:Array[Airport.Line] = new Array[Airport.Line](numLines);
     for (i <- 0 to numLines-1) {
-      temp(i) = new Airport.Line;
+      temp(i) = new Airport.Line(i);
       temp(i).start
     }
     return temp;
@@ -67,7 +66,7 @@ class DocumentCheck extends Actor {
   }
   
   def logSentToLine(passenger: String){
-    printf("Document Check: Passenger #%s name sent to line %d.\n", passenger, lineNumber);
+    printf("Document Check: Passenger #%s sent to line %d.\n", passenger, lineNumber);
   }
   
   def logClosing(){
