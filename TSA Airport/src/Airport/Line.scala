@@ -38,6 +38,9 @@ class Line (bagCheck: Airport.Scanner, bodyCheck: Airport.Scanner) extends Actor
 		          	result(1) = bodyCheckResult;
 		            map + (name -> result);
 	        }
+	      case name : String =>
+	        bagCheck ! name;
+	        bodyCheck ! name;
 	    }
 	  }
 	}
