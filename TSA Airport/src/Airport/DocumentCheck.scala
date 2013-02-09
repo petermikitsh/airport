@@ -4,14 +4,14 @@ import scala.util.Random
 
 case class passenger(name: String)
 
-class DocumentCheck (queue: Array[Airport.Line]) extends Actor{
+class DocumentCheck (line: Array[Airport.Line]) extends Actor{
   
   //20% probability that the passenger will fail
   var failureRate = 20;
-  // Which queue to hand the passenger off to next
-  var queueNumber = 0;
-  // List for holding all the queues.
-  var queues = queue; 
+  // Which line to hand the passenger off to next
+  var lineNumber = 0;
+  // List for holding all the lines.
+  var lines = line; 
   
   def act() {
     loop{
@@ -19,19 +19,19 @@ class DocumentCheck (queue: Array[Airport.Line]) extends Actor{
         case passenger(name: String) =>
           logArrival(name)
           if(passed()){
-            logSentToQueue(name)
-             queues(queueNumber) ! "passenger"
-             this.queueNumber += 1
-             if(queueNumber == queues.length)
-               this.queueNumber = 0
+             logSentToLine(name)
+             lines(lineNumber) ! name;
+             this.lineNumber += 1
+             if(lineNumber == lines.length)
+               this.lineNumber = 0
           }
           else{
             logTurnedAway(name);
           }
         case close: String =>
-          //loop through the actor queue and send close messages.
-          for (q <- queues){
-            q ! "stop"
+          //loop through the actor lines and send close messages.
+          for (l <- lines){
+            l ! "stop"
           }
           logClosing()
           exit
@@ -56,8 +56,8 @@ class DocumentCheck (queue: Array[Airport.Line]) extends Actor{
     println("Document Check: Passenger name turned away"); // Get passenger name
   }
   
-  def logSentToQueue(passenger: String){
-    println("Document Check: Passenger name sent to line " + queueNumber);
+  def logSentToLine(passenger: String){
+    println("Document Check: Passenger name sent to line " + lineNumber);
   }
   
   def logClosing(){

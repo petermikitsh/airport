@@ -40,7 +40,9 @@ class Line (bagCheck: Airport.Scanner, bodyCheck: Airport.Scanner) extends Actor
 	        }
 	      case name : String =>
 	        bagCheck ! name;
+	        printf("Passenger %s's bags enter the bag check.\n", name);
 	        bodyCheck ! name;
+	        printf("Passenger %s enters the body check.\n", name)
 	    }
 	  }
 	}
