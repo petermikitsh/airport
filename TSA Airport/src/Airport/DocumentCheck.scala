@@ -4,23 +4,17 @@ import scala.util.Random
 
 case class passenger(name: String)
 
-<<<<<<< HEAD
-class DocumentCheck (line: Array[String]) extends Actor{
-=======
 class DocumentCheck extends Actor {
->>>>>>> 81c7a43ea9cd7a01a2a4f2014da6324572276a3d
+
   
   //20% probability that the passenger will fail
   var failureRate = 20;
   // Which line to hand the passenger off to next
   var lineNumber = 0;
   // List for holding all the lines.
-<<<<<<< HEAD
-  var lines = line; 
-  var airportLine = new Line()
-=======
-  var lines:Array[Airport.Line] = makeLines(5)
->>>>>>> 81c7a43ea9cd7a01a2a4f2014da6324572276a3d
+
+  var airportLines: Array[Airport.Line] = makeLines(5)
+
   
   def act() {
     loop{
@@ -29,9 +23,9 @@ class DocumentCheck extends Actor {
           logArrival(name)
           if(passed()){
              logSentToLine(name)
-             lines(lineNumber) ! name;
+             airportLines(lineNumber) ! name;
              this.lineNumber += 1
-             if(lineNumber == lines.length)
+             if(lineNumber == airportLines.length)
                this.lineNumber = 0
           }
           else{
@@ -39,7 +33,7 @@ class DocumentCheck extends Actor {
           }
         case close: String =>
           //loop through the actor lines and send close messages.
-          for (l <- lines){
+          for (l <- airportLines){
             l ! "stop"
           }
           logClosing()
@@ -52,6 +46,7 @@ class DocumentCheck extends Actor {
     var temp:Array[Airport.Line] = new Array[Airport.Line](numLines);
     for (i <- 0 to numLines-1) {
       temp(i) = new Airport.Line;
+      temp(i).start
     }
     return temp;
   }
@@ -85,6 +80,21 @@ class DocumentCheck extends Actor {
 
 object Main extends App {
   val docCheck = new DocumentCheck
+  docCheck.start
+  docCheck ! passenger("pass1")
+  docCheck ! passenger("pass2")
+  docCheck ! passenger("pass3")
+  docCheck ! passenger("pass4")
+  docCheck ! passenger("pass5")
+  docCheck ! passenger("pass6")
+  docCheck ! passenger("pass7")
+  docCheck ! passenger("pass8")
+  docCheck ! passenger("pass9")
+  docCheck ! passenger("pass10")
+  docCheck ! passenger("pass11")
+  docCheck ! passenger("pass12")
+  
+  
   
   
   

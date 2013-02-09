@@ -18,6 +18,8 @@ class Line extends Actor{
   case class BodyCheck(name: String, result: Boolean);
   
 	def act(){
+	  bagCheck.start
+	  bodyCheck.start
 	  loop {
 	    receive {
 	      case BagCheck (name: String, bagCheckResult: Boolean) =>
