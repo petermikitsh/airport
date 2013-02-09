@@ -2,7 +2,7 @@ package Airport
 import scala.actors.Actor
 import scala.actors.Actor._
 
-class Line (bagCheck: Airport.Scanner, bodyCheck: Airport.Scanner) extends Actor{
+class Line extends Actor{
 
   /*
    *  Map Structure:
@@ -11,6 +11,8 @@ class Line (bagCheck: Airport.Scanner, bodyCheck: Airport.Scanner) extends Actor
    *  Name => [bagCheckResult, bodyCheckResult]
    */
   private val map: Map[String, Array[Boolean]] = Map()
+  private var bagCheck = new Airport.Scanner(20, 10)
+  private var bodyCheck = new Airport.Scanner(20, 10)
   
   case class BagCheck(name: String, result: Boolean);
   case class BodyCheck(name: String, result: Boolean);
