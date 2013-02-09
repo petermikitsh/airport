@@ -2,6 +2,8 @@ package Airport
 import scala.actors.Actor
 import scala.util.Random
 
+case class passenger(name: String)
+
 class DocumentCheck (queue: Array[Airport.Line]) extends Actor{
   
   //20% probability that the passenger will fail
@@ -9,21 +11,22 @@ class DocumentCheck (queue: Array[Airport.Line]) extends Actor{
   // Which queue to hand the passenger off to next
   var queueNumber = 0;
   // List for holding all the queues.
-  var queues = queue;
+  var queues = queue; 
   
   def act() {
     loop{
       receive{
-        case check: String =>
+        case passenger(name: String) =>
+          logArrival(name)
           if(passed()){
-            logSentToQueue("Name")
+            logSentToQueue(name)
              queues(queueNumber) ! "passenger"
              this.queueNumber += 1
              if(queueNumber == queues.length)
                this.queueNumber = 0
           }
           else{
-            logTurnedAway("Passenger");
+            logTurnedAway(name);
           }
         case close: String =>
           //loop through the actor queue and send close messages.
