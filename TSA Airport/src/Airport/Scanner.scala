@@ -19,7 +19,7 @@ class Scanner (percentage: Int, lines: Int) extends Actor{
 	      case s: String =>
 	        openLines = openLines - 1 
 	        // if stop is received exit the loop
-	        if (check == "stop")
+	        if (s == "stop")
 	          exit
 	          
 	        // Check to see if there is an open line

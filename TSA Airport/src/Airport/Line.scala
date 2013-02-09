@@ -57,6 +57,7 @@ class Line extends Actor{
 	  	  	} else {
 	  	  	  printf("Passenger %s failed one or more checks and goes to jail.\n", name)
 	  	  	}
+	  	case None => println("ERROR: Passenger not found! (onArrayComplete)")
 	  }
 	}
 	
