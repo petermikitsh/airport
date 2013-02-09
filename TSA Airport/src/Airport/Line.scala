@@ -24,7 +24,7 @@ class Line extends Actor{
 	        map.get(name) match {
 	          case Some(i) =>
 	            i(0) = bagCheckResult;
-	            // send message based on completed array
+	            onArrayComplete(name);
 	          case None => 
 	          	val result:Array[Boolean] = new Array[Boolean](2);
 	          	result(0) = bagCheckResult;
@@ -32,13 +32,13 @@ class Line extends Actor{
 	        }
 	      case BodyCheck (name: String, bodyCheckResult: Boolean) =>
 	        map.get(name) match {
-		        case Some(j) =>
-		            j(1) = bodyCheckResult;
-		            // send message based on completed array
-		          case None => 
-		          	val result:Array[Boolean] = new Array[Boolean](2);
-		          	result(1) = bodyCheckResult;
-		            map + (name -> result);
+		      case Some(j) =>
+		        j(1) = bodyCheckResult;
+		        onArrayComplete(name);
+		      case None => 
+		        val result:Array[Boolean] = new Array[Boolean](2);
+		        result(1) = bodyCheckResult;
+		        map + (name -> result);
 	        }
 	      case name : String =>
 	        bagCheck ! name;
@@ -46,6 +46,17 @@ class Line extends Actor{
 	        bodyCheck ! name;
 	        printf("Passenger %s enters the body check.\n", name)
 	    }
+	  }
+	}
+	
+	def onArrayComplete(name: String) {
+	  map.get(name) match {
+	  	case Some(k) =>
+	  	  	if (k(1) && k(2)) {
+	  	  	  printf("Passenger %s cleared all scans.\n", name);
+	  	  	} else {
+	  	  	  printf("Passenger %s failed one or more checks and goes to jail.\n", name)
+	  	  	}
 	  }
 	}
 	
